@@ -1,6 +1,9 @@
-package com.mikezao.CadastroDeNinjas;
+package com.mikezao.CadastroDeNinjas.Ninjas;
 
+import com.mikezao.CadastroDeNinjas.Missoes.MissoesModel;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "tb_cadastro_ninja")
@@ -13,8 +16,13 @@ public class NinjaModel {
     private String email;
     private int idade;
 
+    @ManyToOne
+    @JoinColumn(name = "missoes_id") // Foreign key ou chave estrangeira
+    private MissoesModel missoes;
+
     public NinjaModel() {
     }
+
 
     public NinjaModel(String nome, String email, int idade) {
         this.nome = nome;
