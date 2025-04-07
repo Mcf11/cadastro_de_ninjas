@@ -1,6 +1,6 @@
-package com.mikezao.CadastroDeNinjas.Missoes;
+package com.mikezao.CadastroDeNinjas.Missoes.Model;
 
-import com.mikezao.CadastroDeNinjas.Ninjas.NinjaModel;
+import com.mikezao.CadastroDeNinjas.Ninjas.Model.NinjaModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +24,4 @@ public class MissoesModel {
     // Uma missao pode ter varios ninjas
     @OneToMany(mappedBy = "missoes")
     private List<NinjaModel> ninja;
-
-
 }

@@ -1,4 +1,4 @@
-package com.mikezao.CadastroDeNinjas.Missoes;
+package com.mikezao.CadastroDeNinjas.Missoes.Model;
 
 public enum MissoesRank {
     GENIN,
