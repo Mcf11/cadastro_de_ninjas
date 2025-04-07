@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: Cadastro Ninjas
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  datasource:
+    driver: org.h2.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+    hikari:
+      maximum-pool-size: 10

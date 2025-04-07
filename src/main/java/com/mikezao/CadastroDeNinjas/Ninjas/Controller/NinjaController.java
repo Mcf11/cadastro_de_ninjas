@@ -13,5 +13,4 @@ public class NinjaController {
         return "Hello World!";
     }
 
-
 }
