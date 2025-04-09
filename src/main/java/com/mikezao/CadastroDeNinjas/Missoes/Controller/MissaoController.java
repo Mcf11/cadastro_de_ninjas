@@ -1,6 +1,7 @@
 package com.mikezao.CadastroDeNinjas.Missoes.Controller;
 
 import com.mikezao.CadastroDeNinjas.Missoes.Model.MissoesModel;
+import com.mikezao.CadastroDeNinjas.Missoes.Repository.MissoesRepository;
 import com.mikezao.CadastroDeNinjas.Missoes.Service.MissaoService;
 import com.mikezao.CadastroDeNinjas.Ninjas.Service.NinjaService;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class MissaoController {
 
     // Adicionar missao (create)
     @PostMapping("/criar")
-    public String criarMissoes(){
-        return "Missao criada com sucesso!";
+    public MissoesModel criarMissao(@RequestBody MissoesModel missao){
+        return missaoService.criarMissao(missao);
     }
 
     // Procurar todas os missoes (read)
