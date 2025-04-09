@@ -9,6 +9,11 @@ spring:
     properties:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
 
+  flyway:
+    enable: true
+    locations: classpath:db/migrations
+    baseline-on-migrate: true
+
   h2:
     console:
       enabled: true
@@ -22,3 +27,4 @@ spring:
 
     hikari:
       maximum-pool-size: 10
+
