@@ -1,5 +1,6 @@
 package com.mikezao.CadastroDeNinjas.Missoes.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mikezao.CadastroDeNinjas.Ninjas.Model.NinjaModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,9 +20,10 @@ public class MissoesModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private MissoesRank rank;
+    private String rank;
 
     // Uma missao pode ter varios ninjas
     @OneToMany(mappedBy = "missoes")
+    @JsonIgnore
     private List<NinjaModel> ninja;
 }

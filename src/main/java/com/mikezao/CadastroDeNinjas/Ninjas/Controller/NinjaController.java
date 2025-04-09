@@ -1,10 +1,21 @@
 package com.mikezao.CadastroDeNinjas.Ninjas.Controller;
 
+import com.mikezao.CadastroDeNinjas.Ninjas.Model.NinjaModel;
+import com.mikezao.CadastroDeNinjas.Ninjas.Service.NinjaService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("ninja")
+@RequestMapping("/ninja")
 public class NinjaController {
+
+    // Instancia do ninja service para podermos usar os metodos do JPA
+    private NinjaService ninjaService;
+
+    public NinjaController(NinjaService ninjaService) {
+        this.ninjaService = ninjaService;
+    }
 
     @GetMapping("/hello")
     public String boasVindas(){
@@ -18,9 +29,10 @@ public class NinjaController {
     }
 
     // Procurar todos os ninjas (read)
-    @GetMapping("/todos")
-    public String mostrarNinja(){
-        return "Lista de ninjas";
+    // No service é list então aqui tem de ser list ja que instanciamos o objeto e chamamos o metodo
+    @GetMapping("/listar")
+    public List<NinjaModel> listarNinja(){
+        return ninjaService.listarNinja();
     }
 
     // Mostrar ninja por id (read)
