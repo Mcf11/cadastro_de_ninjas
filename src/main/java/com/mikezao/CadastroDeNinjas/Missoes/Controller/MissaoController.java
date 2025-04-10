@@ -31,7 +31,7 @@ public class MissaoController {
     }
 
     // Alterar dados das missoes (update)
-    @PutMapping("/alterar-missao")
+    @PutMapping("/atual")
     public String alterarMissao(){
         return "Missao atualizada com sucesso!";
     }

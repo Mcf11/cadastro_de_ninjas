@@ -2,6 +2,7 @@ package com.mikezao.CadastroDeNinjas.Missoes.Service;
 
 import com.mikezao.CadastroDeNinjas.Missoes.Model.MissoesModel;
 import com.mikezao.CadastroDeNinjas.Missoes.Repository.MissoesRepository;
+import com.mikezao.CadastroDeNinjas.Ninjas.Model.NinjaModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,4 +32,14 @@ public class MissaoService {
     public void deletarMissao(Long id){
         missoesRepository.deleteById(id);
     }
+
+    // Atualizar missoes
+    public MissoesModel atualizarMissao(Long id, MissoesModel missaoAtualizada){
+        if(missoesRepository.existsById(id)){
+            missaoAtualizada.setId(id);
+            return missoesRepository.save(missaoAtualizada);
+        }
+        return null;
+    }
+
 }
