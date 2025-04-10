@@ -1,5 +1,6 @@
 package com.mikezao.CadastroDeNinjas.Ninjas.Controller;
 
+import com.mikezao.CadastroDeNinjas.Ninjas.DTO.NinjaDTO;
 import com.mikezao.CadastroDeNinjas.Ninjas.Model.NinjaModel;
 import com.mikezao.CadastroDeNinjas.Ninjas.Service.NinjaService;
 import org.springframework.web.bind.annotation.*;
@@ -25,26 +26,26 @@ public class NinjaController {
     // Adicionar ninja (create)
     // Envia no corpo da requisiçao o objeto ninja
     @PostMapping("/criar")
-    public NinjaModel criarNinja(@RequestBody NinjaModel ninja){
+    public NinjaDTO criarNinja(@RequestBody NinjaDTO ninja){
         return ninjaService.criarNinja(ninja);
     }
 
     // Procurar todos os ninjas (read)
     // No service é list então aqui tem de ser list ja que instanciamos o objeto e chamamos o metodo
     @GetMapping("/listar")
-    public List<NinjaModel> listarNinja(){
+    public List<NinjaDTO> listarNinja(){
         return ninjaService.listarNinja();
     }
 
     // Mostrar ninja por id (read)
     @GetMapping("/listar/{id}")
-    public NinjaModel listarNinjasPorId(@PathVariable Long id){
+    public NinjaDTO listarNinjasPorId(@PathVariable Long id){
         return ninjaService.listarNinjasPorId(id);
     }
 
     // Alterar dados dos ninjas (update)
     @PutMapping("/atualizar/{id}")
-    public NinjaModel atualizarNinja(@PathVariable Long id, @RequestBody NinjaModel ninjaAtualizado){
+    public NinjaDTO atualizarNinja(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado){
         return ninjaService.atualizarNinja(id, ninjaAtualizado);
     }
 
