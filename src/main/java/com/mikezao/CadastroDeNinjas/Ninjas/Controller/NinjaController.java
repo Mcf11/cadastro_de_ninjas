@@ -33,19 +33,19 @@ public class NinjaController {
     // Procurar todos os ninjas (read)
     // No service é list então aqui tem de ser list ja que instanciamos o objeto e chamamos o metodo
     @GetMapping("/listar")
-    public List<NinjaModel> listarNinja(){
+    public List<NinjaDTO> listarNinja(){
         return ninjaService.listarNinja();
     }
 
     // Mostrar ninja por id (read)
     @GetMapping("/listar/{id}")
-    public NinjaModel listarNinjasPorId(@PathVariable Long id){
+    public NinjaDTO listarNinjasPorId(@PathVariable Long id){
         return ninjaService.listarNinjasPorId(id);
     }
 
     // Alterar dados dos ninjas (update)
     @PutMapping("/atualizar/{id}")
-    public NinjaModel atualizarNinja(@PathVariable Long id, @RequestBody NinjaModel ninjaAtualizado){
+    public NinjaDTO atualizarNinja(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado){
         return ninjaService.atualizarNinja(id, ninjaAtualizado);
     }
 
