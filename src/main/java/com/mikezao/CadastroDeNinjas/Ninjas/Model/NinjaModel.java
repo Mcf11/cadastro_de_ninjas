@@ -26,4 +26,7 @@ public class NinjaModel {
     @JoinColumn(name = "missoes_id") // Foreign key ou chave estrangeira
     private MissoesModel missoes;
 
+    @Column(name = "rank")
+    private String rank;
+
 }
