@@ -1,11 +1,15 @@
 package com.mikezao.CadastroDeNinjas.Missoes.Service;
 
+import com.mikezao.CadastroDeNinjas.Missoes.DTO.MissoesDTO;
+import com.mikezao.CadastroDeNinjas.Missoes.DTO.MissoesMapper;
 import com.mikezao.CadastroDeNinjas.Missoes.Model.MissoesModel;
 import com.mikezao.CadastroDeNinjas.Missoes.Repository.MissoesRepository;
 import com.mikezao.CadastroDeNinjas.Ninjas.Model.NinjaModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MissaoService {
@@ -14,18 +18,34 @@ public class MissaoService {
     // Injetando dependencia para dar acesso ao banco para o service
     private MissoesRepository missoesRepository;
 
-    public MissaoService(MissoesRepository missoesRepository) {
+    // Mapper
+    private MissoesMapper missoesMapper;
+
+    // Construtor precisa ser atualizado quando incluido o mapper
+    public MissaoService(MissoesMapper missoesMapper, MissoesRepository missoesRepository) {
+        this.missoesMapper = missoesMapper;
         this.missoesRepository = missoesRepository;
     }
 
     // Adicionar metodo para listar missoes
-    public List<MissoesModel> listarMissoes(){
-        return missoesRepository.findAll();
+    public List<MissoesDTO> listarMissoes(){
+        List<MissoesModel> missoes = missoesRepository.findAll();
+        return missoes.stream()
+                .map(missoesMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    // Metodo para listar missoes por id para validação
+    public MissoesDTO listarMissoesPorId(Long id){
+        Optional<MissoesModel> missaoPorId = missoesRepository.findById(id);
+        return missaoPorId.map(missoesMapper::map).orElse(null);
     }
 
     // Criar missoes
-    public MissoesModel criarMissao(MissoesModel missao){
-        return missoesRepository.save(missao);
+    public MissoesDTO criarMissao(MissoesDTO missaoDTO){
+        MissoesModel missao = missoesMapper.map(missaoDTO);
+        missao = missoesRepository.save(missao);
+        return missoesMapper.map(missao);
     }
 
     // Deletar missoes
@@ -34,10 +54,13 @@ public class MissaoService {
     }
 
     // Atualizar missoes
-    public MissoesModel atualizarMissao(Long id, MissoesModel missaoAtualizada){
-        if(missoesRepository.existsById(id)){
+    public MissoesDTO atualizarMissao(Long id, MissoesDTO missoesDTO){
+        Optional<MissoesModel> missaoExistente = missoesRepository.findById(id);
+        if(missaoExistente.isPresent()){
+            MissoesModel missaoAtualizada = missoesMapper.map(missoesDTO);
             missaoAtualizada.setId(id);
-            return missoesRepository.save(missaoAtualizada);
+            MissoesModel missaoSalva = missoesRepository.save(missaoAtualizada);
+            return missoesMapper.map(missaoSalva);
         }
         return null;
     }
