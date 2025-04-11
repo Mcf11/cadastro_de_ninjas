@@ -3,6 +3,9 @@ package com.mikezao.CadastroDeNinjas.Ninjas.Controller;
 import com.mikezao.CadastroDeNinjas.Ninjas.DTO.NinjaDTO;
 import com.mikezao.CadastroDeNinjas.Ninjas.Model.NinjaModel;
 import com.mikezao.CadastroDeNinjas.Ninjas.Service.NinjaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,7 @@ public class NinjaController {
     }
 
     @GetMapping("/hello")
+    @Operation(summary = "Imprime mensagem de boas vindas", description = "Rota que devolve a mensagem de hello world quando acessada")
     public String boasVindas(){
         return "Hello World!";
     }
@@ -28,6 +32,7 @@ public class NinjaController {
     // Adicionar ninja (create)
     // Envia no corpo da requisiçao o objeto ninja
     @PostMapping("/criar")
+    @Operation(summary = "Cria novo ninja", description = "Rota para criação de um novo ninja e insere no banco de dados in memory salvo localmente")
     public ResponseEntity<String> criarNinja(@RequestBody NinjaDTO ninja){
         NinjaDTO novoNinja = ninjaService.criarNinja(ninja);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -37,6 +42,7 @@ public class NinjaController {
     // Procurar todos os ninjas (read)
     // No service é list então aqui tem de ser list ja que instanciamos o objeto e chamamos o metodo
     @GetMapping("/listar")
+    @Operation(summary = "Lista ninjas", description = "Lista todos os ninjas cadastrados no banco de dados")
     public ResponseEntity<List<NinjaDTO>> listarNinja(){
         List<NinjaDTO> ninjas = ninjaService.listarNinja();
         return ResponseEntity.ok(ninjas);
@@ -45,6 +51,11 @@ public class NinjaController {
     // Mostrar ninja por id (read)
     // Passamos um generic pois devolveremos diferentes tipos na resposta
     @GetMapping("/listar/{id}")
+    @Operation(summary = "Lista ninjas baseado no ID fornecido", description = "Busca ninjas com ID fornecido no banco de dados in memory")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ninja encontrado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Id do ninja fornecido não encontrado no banco de dados")
+    })
     public ResponseEntity<?> listarNinjasPorId(@PathVariable Long id){
         NinjaDTO ninja = ninjaService.listarNinjasPorId(id);
         if(ninja != null){
@@ -57,6 +68,7 @@ public class NinjaController {
 
     // Alterar dados dos ninjas (update)
     @PutMapping("/atualizar/{id}")
+    @Operation(summary = "Atualiza informações do ninja", description = "Altera ninja com id fornecido no path url e descrição no corpo da requisição")
     public ResponseEntity<?> atualizarNinja(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado){
         NinjaDTO ninja = ninjaService.atualizarNinja(id, ninjaAtualizado);
         if(ninja != null){
@@ -69,6 +81,7 @@ public class NinjaController {
 
     // Deletar ninja (delete)
     @DeleteMapping("/deletar/{id}")
+    @Operation(summary = "Deleta ninja", description = "Deleta ninja baseado no id fornecido")
     public ResponseEntity<String> deletarNinja(@PathVariable Long id){
         if (ninjaService.listarNinjasPorId(id) != null){
             ninjaService.deletarNinja(id);
